@@ -37,7 +37,7 @@ function RentSearchContent() {
   const [vehicleType, setVehicleType] = useState(searchParams.get('vehicleType') || 'ALL');
   const [transmission, setTransmission] = useState('ALL');
   const [fuelType, setFuelType] = useState('ALL');
-  const [maxPrice, setMaxPrice] = useState(5000);
+  const [maxPrice, setMaxPrice] = useState(10000);
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +48,7 @@ function RentSearchContent() {
     if (vehicleType !== 'ALL') query.set('vehicleType', vehicleType);
     if (transmission !== 'ALL') query.set('transmission', transmission);
     if (fuelType !== 'ALL') query.set('fuelType', fuelType);
-    if (maxPrice < 5000) query.set('maxDailyPrice', maxPrice.toString());
+    if (maxPrice < 10000) query.set('maxDailyPrice', maxPrice.toString());
 
     fetch(`/api/vehicles?${query.toString()}`)
       .then((r) => r.json())
@@ -152,6 +152,8 @@ function RentSearchContent() {
               <option value="PETROL">Petrol</option>
               <option value="DIESEL">Diesel</option>
               <option value="ELECTRIC">Electric (EV)</option>
+              <option value="HYBRID">Hybrid</option>
+              <option value="CNG">CNG</option>
             </select>
           </div>
 
@@ -162,9 +164,9 @@ function RentSearchContent() {
             </label>
             <input
               type="range"
-              min={1500}
-              max={5000}
-              step={500}
+              min={800}
+              max={10000}
+              step={200}
               value={maxPrice}
               onChange={(e) => setMaxPrice(parseInt(e.target.value, 10))}
               className="w-full accent-emerald-600"
